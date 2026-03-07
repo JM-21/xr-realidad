@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Visor de Ensamble 3D</title>
+    
+    <!-- A-Frame v1.4.1 -->
+    <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
+    
+    <!-- Orbit Controls para poder rotar la cámara alrededor del ensamble con el mouse -->
+    <script src="https://unpkg.com/aframe-orbit-controls@1.3.2/dist/aframe-orbit-controls.min.js"></script>
+</head>
+<body>
+
+<a-scene>
+
+    <!-- CARGAR MODELO CAD (El archivo ensamble.glb está dentro de la carpeta "models") -->
+    <a-assets>
+        <a-asset-item id="modeloCAD" src="models/ensamble.glb"></a-asset-item>
+    </a-assets>
+
+    <!-- CAMARA CON CONTROLES LIBRES (Moverse con WASD, rotar con el Mouse) -->
+    <a-entity
+        camera
+        position="0 1.6 4"
+        look-controls="pointerLockEnabled: false"
+        wasd-controls="fly: true; acceleration: 40">
+    </a-entity>
+
+    <!-- LUCES (Mejoradas para que el ensamble se vea bien definido) -->
+    <a-light type="ambient" intensity="0.7"></a-light>
+    <a-light type="directional" position="5 10 5" intensity="0.8" castShadow="true"></a-light>
+    <a-light type="directional" position="-5 10 -5" intensity="0.3"></a-light>
+
+    <!-- PISO -->
+    <a-plane
+        rotation="-90 0 0"
+        width="20"
+        height="20"
+        color="#333"
+        opacity="0.5">
+    </a-plane>
+
+    <!-- MODELO CAD (TU ENSAMBLE) -->
+    <a-entity
+        gltf-model="#modeloCAD"
+        position="0 1 -2"
+        scale="1 1 1"
+        rotation="0 0 0">
+        <!-- Opcional: Si quieres que el ensamble rote automáticamente, descomenta la siguiente línea -->
+        <!-- <a-animation attribute="rotation" to="0 360 0" dur="10000" repeat="indefinite"></a-animation> (Versión antigua) -->
+        <!-- animation="property: rotation; to: 0 360 0; dur: 10000; loop: true; easing: linear" (Versión nueva, añádela como atributo a <a-entity>) -->
+    </a-entity>
+
+    <!-- CIELO -->
+    <a-sky color="#cfd8dc"></a-sky>
+
+</a-scene>
+
+</body>
+</html>

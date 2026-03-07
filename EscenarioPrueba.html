@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Banda Transportadora XR</title>
+    <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
+</head>
+
+<body>
+
+    <a-scene>
+
+        <!-- CAMARA -->
+        <a-entity position="0 1.6 5">
+            <a-camera></a-camera>
+        </a-entity>
+
+        <!-- LUCES -->
+        <a-light type="ambient" intensity="0.6"></a-light>
+        <a-light type="directional" position="5 10 5" intensity="1"></a-light>
+
+        <!-- PISO -->
+        <a-plane rotation="-90 0 0" width="20" height="20" color="#555">
+        </a-plane>
+
+        <!-- PARED ROJA -->
+        <a-plane position="0 5 -10" width="20" height="10" color="red">
+        </a-plane>
+
+        <!-- PARED AMARILLA -->
+        <a-plane position="10 5 0" rotation="0 -90 0" width="20" height="10" color="yellow">
+        </a-plane>
+
+        <!-- PARED AZUL -->
+        <a-plane position="-10 5 0" rotation="0 90 0" width="20" height="10" color="blue">
+        </a-plane>
+
+        <!-- PARED VERDE -->
+        <a-plane position="0 5 10" rotation="0 180 0" width="20" height="10" color="green">
+        </a-plane>
+
+        <!-- ESTRUCTURA DE LA BANDA -->
+        <a-box position="0 0.8 -4" width="5" height="0.3" depth="1.5" color="#444">
+        </a-box>
+
+        <!-- BANDA -->
+        <a-box position="0 0.95 -4" width="4.8" height="0.1" depth="1.2" color="black">
+        </a-box>
+
+        <!-- SOPORTES -->
+        <a-box position="-2 0.4 -4" width="0.3" height="0.8" depth="1.2" color="#888"></a-box>
+        <a-box position="2 0.4 -4" width="0.3" height="0.8" depth="1.2" color="#888"></a-box>
+
+        <!-- RODILLO IZQUIERDO -->
+        <a-cylinder position="-2.5 0.95 -4" radius="0.25" height="1.2" rotation="90 0 0" color="#aaa">
+
+            <a-animation attribute="rotation" to="90 360 0" dur="2000" repeat="indefinite">
+            </a-animation>
+
+        </a-cylinder>
+
+        <!-- RODILLO DERECHO -->
+        <a-cylinder position="2.5 0.95 -4" radius="0.25" height="1.2" rotation="90 0 0" color="#aaa">
+
+            <a-animation attribute="rotation" to="90 360 0" dur="2000" repeat="indefinite">
+            </a-animation>
+
+        </a-cylinder>
+
+        <!-- CAJA ENCIMA DE LA BANDA -->
+        <a-box position="-2 1.25 -4" depth="0.5" height="0.5" width="0.5" color="#FFC65D">
+
+            <a-animation attribute="position" from="-2 1.25 -4" to="2 1.25 -4" dur="4000" repeat="indefinite">
+            </a-animation>
+
+        </a-box>
+
+        <!-- SENSOR -->
+
+        <!-- base -->
+        <a-box position="1 1.3 -3.2" width="0.2" height="0.4" depth="0.2" color="#222">
+        </a-box>
+
+        <!-- luz -->
+        <a-sphere position="1 1.35 -3.05" radius="0.08" color="red">
+
+            <a-animation attribute="scale" from="1 1 1" to="1.3 1.3 1.3" direction="alternate" dur="800"
+                repeat="indefinite">
+            </a-animation>
+
+        </a-sphere>
+
+        <!-- ZONA DEL SENSOR -->
+        <a-plane position="1 0.96 -4" rotation="-90 0 0" width="0.8" height="1.2" color="yellow" opacity="0.3">
+        </a-plane>
+
+        <!-- CIELO -->
+        <a-sky color="#cfd8dc"></a-sky>
+
+    </a-scene>
+
+</body>
+
+</html>
