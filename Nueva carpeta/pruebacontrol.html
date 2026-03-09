@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Visor de Ensamble 3D</title>
+
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
+
+</head>
+
+<body>
+
+    <a-scene>
+
+        <!-- CARGAR MODELO CAD -->
+        <a-assets>
+            <a-asset-item id="modeloCAD" src="models/ensamble.glb"></a-asset-item>
+        </a-assets>
+
+        <!-- CAMARA -->
+        <a-entity id="camara" camera position="0 1.6 4" look-controls wasd-controls="enabled:false">
+        </a-entity>
+
+        <!-- LUCES -->
+        <a-light type="ambient" intensity="0.9"></a-light>
+        <a-light type="directional" position="5 10 5" intensity="0.8"></a-light>
+        <a-light type="directional" position="-5 10 -5" intensity="0.4"></a-light>
+
+        <!-- PISO -->
+        <a-plane rotation="-90 0 0" width="20" height="20" color="#333" opacity="0.5">
+        </a-plane>
+
+        <!-- MODELO CAD -->
+        <a-entity gltf-model="#modeloCAD" position="0 1 -2" scale="1 1 1" rotation="0 0 0">
+        </a-entity>
+
+        <!-- CIELO -->
+        <a-sky color="#cfd8dc"></a-sky>
+
+    </a-scene>
+
+    <script>
+
+        let camara = document.querySelector("#camara");
+
+        function updateGamepad() {
+
+            const gamepads = navigator.getGamepads();
+
+            if (!gamepads) return;
+
+            const gp = gamepads[0];
+
+            if (!gp) return;
+
+            let moveX = gp.axes[0];
+            let moveY = gp.axes[1];
+
+            let velocidad = 0.08;
+
+            let direction = new THREE.Vector3();
+            camara.object3D.getWorldDirection(direction);
+
+            direction.y = 0;
+            direction.normalize();
+
+            let right = new THREE.Vector3();
+            right.crossVectors(direction, new THREE.Vector3(0, 1, 0)).normalize();
+
+            let pos = camara.object3D.position;
+
+            pos.addScaledVector(direction, -moveY * velocidad);
+            pos.addScaledVector(right, moveX * velocidad);
+
+            requestAnimationFrame(updateGamepad);
+        }
+
+        window.addEventListener("gamepadconnected", function () {
+            console.log("Control conectado");
+            updateGamepad();
+        });
+
+    </script>
+
+</body>
+
+</html>
