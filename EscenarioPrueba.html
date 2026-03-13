@@ -4,25 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Banda Transportadora XR</title>
-
     <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
-
-    <script>
-        AFRAME.registerComponent('belt-move', {
-            schema: { speed: { default: 0.4 } },
-            tick: function (time, timeDelta) {
-
-                const mesh = this.el.getObject3D('mesh');
-                if (!mesh) return;
-
-                const material = mesh.material;
-                if (!material.map) return;
-
-                material.map.offset.x -= this.data.speed * timeDelta / 1000;
-            }
-        });
-    </script>
-
 </head>
 
 <body>
@@ -39,25 +21,31 @@
         <a-light type="directional" position="5 10 5" intensity="1"></a-light>
 
         <!-- PISO -->
-        <a-plane rotation="-90 0 0" width="20" height="20" color="#555"></a-plane>
+        <a-plane rotation="-90 0 0" width="20" height="20" color="#555">
+        </a-plane>
 
-        <!-- PAREDES -->
-        <a-plane position="0 5 -10" width="20" height="10" color="red"></a-plane>
-        <a-plane position="10 5 0" rotation="0 -90 0" width="20" height="10" color="yellow"></a-plane>
-        <a-plane position="-10 5 0" rotation="0 90 0" width="20" height="10" color="blue"></a-plane>
-        <a-plane position="0 5 10" rotation="0 180 0" width="20" height="10" color="green"></a-plane>
+        <!-- PARED ROJA -->
+        <a-plane position="0 5 -10" width="20" height="10" color="red">
+        </a-plane>
 
-        <!-- BASE -->
-        <a-box position="0 0.8 -4" width="5" height="0.3" depth="1.5" color="#444"></a-box>
+        <!-- PARED AMARILLA -->
+        <a-plane position="10 5 0" rotation="0 -90 0" width="20" height="10" color="yellow">
+        </a-plane>
 
-        <!-- TEXTURA -->
-        <a-assets>
-            <img id="beltTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg">
-        </a-assets>
+        <!-- PARED AZUL -->
+        <a-plane position="-10 5 0" rotation="0 90 0" width="20" height="10" color="blue">
+        </a-plane>
+
+        <!-- PARED VERDE -->
+        <a-plane position="0 5 10" rotation="0 180 0" width="20" height="10" color="green">
+        </a-plane>
+
+        <!-- ESTRUCTURA DE LA BANDA -->
+        <a-box position="0 0.8 -4" width="5" height="0.3" depth="1.5" color="#444">
+        </a-box>
 
         <!-- BANDA -->
-        <a-box position="0 0.95 -4" width="4.8" height="0.1" depth="1.2" belt-move="speed:0.4"
-            material="src:#beltTexture; repeat:8 1">
+        <a-box position="0 0.95 -4" width="4.8" height="0.1" depth="1.2" color="black">
         </a-box>
 
         <!-- SOPORTES -->
@@ -65,42 +53,49 @@
         <a-box position="2 0.4 -4" width="0.3" height="0.8" depth="1.2" color="#888"></a-box>
 
         <!-- RODILLO IZQUIERDO -->
-        <a-entity position="-2.5 0.95 -4" rotation="90 0 0">
-            <a-cylinder radius="0.25" height="1.2" color="#aaa"
-                animation="property: rotation; to: 0 360 0; loop: true; dur: 3927; easing: linear">
-            </a-cylinder>
-        </a-entity>
+        <a-cylinder position="-2.5 0.95 -4" radius="0.25" height="1.2" rotation="90 0 0" color="#aaa">
+
+            <a-animation attribute="rotation" to="90 360 0" dur="2000" repeat="indefinite">
+            </a-animation>
+
+        </a-cylinder>
 
         <!-- RODILLO DERECHO -->
-        <a-entity position="2.5 0.95 -4" rotation="90 0 0">
-            <a-cylinder radius="0.25" height="1.2" color="#aaa"
-                animation="property: rotation; to: 0 360 0; loop: true; dur: 3927; easing: linear">
-            </a-cylinder>
-        </a-entity>
+        <a-cylinder position="2.5 0.95 -4" radius="0.25" height="1.2" rotation="90 0 0" color="#aaa">
 
-        <!-- CAJA -->
-        <a-box position="-2 1.25 -4" depth="0.5" height="0.5" width="0.5" color="#FFC65D" animation="property: position;
-           from:-2 1.25 -4;
-           to:2 1.25 -4;
-           dur:4000;
-           loop:true">
+            <a-animation attribute="rotation" to="90 360 0" dur="2000" repeat="indefinite">
+            </a-animation>
+
+        </a-cylinder>
+
+        <!-- CAJA ENCIMA DE LA BANDA -->
+        <a-box position="-2 1.25 -4" depth="0.5" height="0.5" width="0.5" color="#FFC65D">
+
+            <a-animation attribute="position" from="-2 1.25 -4" to="2 1.25 -4" dur="4000" repeat="indefinite">
+            </a-animation>
+
         </a-box>
 
         <!-- SENSOR -->
-        <a-box position="1 1.3 -3.2" width="0.2" height="0.4" depth="0.2" color="#222"></a-box>
 
-        <a-sphere position="1 1.35 -3.05" radius="0.08" color="red" animation="property: scale;
-           from:1 1 1;
-           to:1.3 1.3 1.3;
-           dir:alternate;
-           dur:800;
-           loop:true">
+        <!-- base -->
+        <a-box position="1 1.3 -3.2" width="0.2" height="0.4" depth="0.2" color="#222">
+        </a-box>
+
+        <!-- luz -->
+        <a-sphere position="1 1.35 -3.05" radius="0.08" color="red">
+
+            <a-animation attribute="scale" from="1 1 1" to="1.3 1.3 1.3" direction="alternate" dur="800"
+                repeat="indefinite">
+            </a-animation>
+
         </a-sphere>
 
-        <!-- ZONA SENSOR -->
+        <!-- ZONA DEL SENSOR -->
         <a-plane position="1 0.96 -4" rotation="-90 0 0" width="0.8" height="1.2" color="yellow" opacity="0.3">
         </a-plane>
 
+        <!-- CIELO -->
         <a-sky color="#cfd8dc"></a-sky>
 
     </a-scene>
